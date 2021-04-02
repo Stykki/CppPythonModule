@@ -2,15 +2,16 @@
 import random, sys, time
 
 
-FPS = 0.2
-width = 40
-height = 20
+FPS = 0
+width = 10
+height = 10
 seed = 10
 # random.seed(10)
 
 class Tree:
-    def __init__(self):
+    def __init__(self, id):
         self.__parent = None
+        self.id = id
 
     def set_parent(self, new_parent):
         self.__parent = new_parent
@@ -35,7 +36,7 @@ sets = []
 for y in range(height):
     row = []
     for x in range(width):
-        row.append(Tree())
+        row.append(Tree(x+y))
     sets.append(row)
 
 def print_grid(grid, path_grid):
@@ -129,7 +130,7 @@ def print_grid(grid, path_grid):
                         raise
                 except:
                     second_line += u'\u2550'*4 # "════"
-            # For grid numbers 10, 11, 14 and 115(E^S, E^S^N, E^W^S, E^W^S^N)
+            # For grid numbers 10, 11, 14 and 15(E^S, E^S^N, E^W^S, E^W^S^N)
             else:
                 try:
                     if grid[y+1][x] & E == 0 and grid[y][x+1] & S == 0:
@@ -165,6 +166,7 @@ while edges:
     nx, ny = x + MOVE_X_DIRECTION[direction], y + MOVE_Y_DIRECTION[direction]
 
     set_1, set_2 = sets[y][x], sets[ny][nx]
+    print(f"set_1 {set_1.id}, set_2 {set_2.id}")
     if not set_1.is_connected(set_2):
         set_1.connect_trees(set_2)
         maze_grid[y][x] |= direction

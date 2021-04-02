@@ -15,9 +15,9 @@ int myrandom (int i) { return std::rand()%i;}
 class kTree
 {
     private:
-        kTree* parent = nullptr;
 
     public:
+        kTree* parent = nullptr;
         int id;
         kTree();
         void setParent(kTree* newP);
@@ -440,7 +440,11 @@ void Kruskals::run(bool display)
         
         if(!set_1.sameParent(&set_2))
         {
-            set_1.connectTrees(&set_2);
+            int s1Parent = set_1.root()->id;
+            int s2Parent = set_2.root()->id;
+
+            sets[s1Parent].parent = &sets[s2Parent];
+
             mazeGrid[getIndex(y,x)] |= direction;
             mazeGrid[getIndex(ny,nx)] |= OPPOSITE_DIRECTION[direction];
 
@@ -472,6 +476,7 @@ int main(){
     Kruskals T = Kruskals(20, 20);
     T.printGrid();
     T.run(1);
+    T.printGrid();
     return 0;
 }
 
