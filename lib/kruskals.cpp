@@ -10,6 +10,7 @@
 
 using namespace std;
 
+int myrandom (int i) { return std::rand()%i;}
 
 class kTree
 {
@@ -17,11 +18,13 @@ class kTree
         kTree* parent = nullptr;
 
     public:
+        int id;
         kTree();
         void setParent(kTree* newP);
         kTree* root();
         bool sameParent(kTree* otherP);
         void connectTrees(kTree* otherT);
+        void setId(int d);
 };
 
 kTree::kTree()
@@ -29,9 +32,13 @@ kTree::kTree()
     return;
 }
 
+void kTree::setId(int d)
+{
+    id = d;
+}
+
 void kTree::setParent(kTree* newP)
 {
- 
     parent = newP;
 }
 
@@ -49,7 +56,7 @@ kTree* kTree::root()
 
 bool kTree::sameParent(kTree* otherP)
 {
-    if(root() == otherP->root())
+    if(root()->id == otherP->root()->id)
     {
         return 1;
     }
@@ -71,9 +78,10 @@ class Kruskals: public Maze
         int S = 2;
         int W = 4;
         int E = 8;
-        int MOVE_X_DIRECTION[9] = {0 ,0, 0, 0, -1, 0, 0, 0, 1};
-        int MOVE_Y_DIRECTION[9] = {0 ,-1, 1, 0, 0, 0, 0, 0, 0};
-        int OPPOSITE_DIRECTION[9] = {0 , S, N, 0, E, 0, 0, 0, W};
+        //                         0    N  S  3   W  5  6  7  E
+        int MOVE_X_DIRECTION[9] = {0 ,  0, 0, 0, -1, 0, 0, 0, 1};
+        int MOVE_Y_DIRECTION[9] = {0 , -1, 1, 0,  0, 0, 0, 0, 0};
+        int OPPOSITE_DIRECTION[9] = {0, S, N, 0,  E, 0, 0, 0, W};
         vector<vector<int>>* edges = new vector<vector<int>>;
 
         int * mazeGrid;
@@ -86,6 +94,8 @@ class Kruskals: public Maze
         ~Kruskals();
         void run(bool display);
         void printGrid();
+        void printSetId();
+        void printDigits();
 
 
 
@@ -95,24 +105,20 @@ Kruskals::Kruskals(int w, int h)
 {
     width = w;
     height = h;
-    cout << "in KRUS" << endl;
     mazeGrid = new int[width * height];
     pathGrid = new bool[width * height];
     sets = new kTree[width * height]; 
-    cout << "all sets done" << endl;
     for (int i = 0; i < width*height; i++)
     {
         mazeGrid[i] = 0;
-        cout << " mazeGrid [i] " << mazeGrid[i];
         pathGrid[i] = 0;
         sets[i] = kTree();
+        sets[i].setId(i);
     }
-    cout << "FOOOOOOOOOOR" << endl;
     for(int y = 0; y < height; y++)
     {
-        for (int x = 0; x < height; x++)
+        for (int x = 0; x < width; x++)
         {
-
             if (y > 0)
             {
                 vector<int> b = {x, y, N};
@@ -127,13 +133,25 @@ Kruskals::Kruskals(int w, int h)
         }
 
     }
-    cout << "second for" << endl;
-
-    random_shuffle(edges->begin(), edges->end());
-    cout << "SEX OFFENDER SHUFFLE" << endl;
+    random_shuffle(edges->begin(), edges->end(), myrandom);
 }
 
 
+void Kruskals::printDigits()
+{
+for ( int i = 0; i < 10; i ++ )
+    {
+
+        for ( int y = 0; y < 10; y ++ )
+        {
+            cout << "["<<  mazeGrid[getIndex(i, y)] << "]";
+
+        }
+        cout << endl;
+    }
+
+
+}
 
 void Kruskals::printGrid()
 {
@@ -199,7 +217,10 @@ void Kruskals::printGrid()
 
                 if ( ((mazeGrid[getIndex(y,x)] & E) != 0) && (mazeGrid[getIndex(y,x)] & W) != 0) 
                 {
-                    firstLine += pathChar*4;
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                    firstLine += pathChar;
                 }
                 else if(((mazeGrid[getIndex(y,x)] & (N+S)) != 0 && (mazeGrid[getIndex(y,x)] & (E+W)) == 0))
                 {
@@ -211,21 +232,37 @@ void Kruskals::printGrid()
                 else if((mazeGrid[getIndex(y,x)] & E) != 0 )
                 {
                     firstLine += " ";
-                    firstLine += pathChar*3;
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                    firstLine += pathChar;
                 }
                 else
                 {
-                    if ((mazeGrid[getIndex(y,x)] & E) == 0)
-                    {
-                        firstLine += pathChar * 3;
-                        firstLine += "║";
-                    }
-                    else
-                    {
-                        firstLine += pathChar*4;
-                    }
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                    firstLine += " ";
+                    firstLine += "║";
 
                 }
+            }
+
+            else
+            {
+                if ((mazeGrid[getIndex(y,x)] & E) == 0)
+                {
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                    firstLine += "║";
+                }
+                else
+                {
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                    firstLine += pathChar;
+                }
+
 
             }
             //SECOND LINE OF EACH SPOT
@@ -233,19 +270,8 @@ void Kruskals::printGrid()
             // for grid numbers 0, 1, 4, 5 N AND W
             if ((mazeGrid[getIndex(y,x)] & (S+E)) == 0)
             {
-                if (((mazeGrid[getIndex(y,x+1)] & S) == 0) && (mazeGrid[getIndex(y+1,x)] & E) == 0) 
-                {
-                    secondLine += "═══╬";
-                }
-                else if (((mazeGrid[getIndex(y,x+1)] & S) == 0) && (mazeGrid[getIndex(y+1,x)] & E) != 0) 
-                {
-                    secondLine += "═══╩";
-                }
-                else if (((mazeGrid[getIndex(y,x+1)] & S) != 0) && (mazeGrid[getIndex(y+1,x)] & E) != 0) 
-                {
-                    secondLine += "═══╝";
-                }
-                else
+
+                if (x+1 == width || y+1 == height)
                 {
                     if ( y == height -1 && x == width-1)
                     {
@@ -261,10 +287,51 @@ void Kruskals::printGrid()
                     }
 
                 }
+
+
+                else if(((mazeGrid[getIndex(y,x+1)] & S) == 0) && (mazeGrid[getIndex(y+1,x)] & E) == 0) 
+                {
+                    secondLine += "═══╬";
+                }
+                else if (((mazeGrid[getIndex(y,x+1)] & S) == 0) && (mazeGrid[getIndex(y+1,x)] & E) != 0) 
+                {
+                    secondLine += "═══╩";
+                }
+                else if (((mazeGrid[getIndex(y,x+1)] & S) != 0) && (mazeGrid[getIndex(y+1,x)] & E) != 0) 
+                {
+                    secondLine += "═══╝";
+                }
+
+                else
+                {
+
+                    if ( y == height -1 && x == width-1)
+                    {
+                        secondLine += "═══╝";
+                    }
+                    else if ( y == height -1)
+                    {
+                        secondLine += "═══╩";
+                    }
+                    else
+                    {
+                        secondLine += "═══╣";
+                    }
+
+
+                }
             }
             else if ((mazeGrid[getIndex(y,x)] & (E)) == 0)
             {
-                if (((mazeGrid[getIndex(y,x+1)] & S) == 0) && (mazeGrid[getIndex(y+1,x)] & E) == 0) 
+                if (x+1 == width || y+1 == height)
+                {
+                    secondLine += " ";
+                    secondLine += pathChar;
+                    secondLine += " ";
+                    secondLine += "║";
+
+                }
+                else if(((mazeGrid[getIndex(y,x+1)] & S) == 0) && (mazeGrid[getIndex(y+1,x)] & E) == 0) 
                 {
                     secondLine += " ";
                     secondLine += pathChar;
@@ -284,12 +351,17 @@ void Kruskals::printGrid()
                     secondLine += pathChar;
                     secondLine += " ";
                     secondLine += "║";
+
                 }
 
             }
             else if ((mazeGrid[getIndex(y,x)] & (S)) == 0)
             {
-                if (((mazeGrid[getIndex(y+1,x)] & E) == 0) && (mazeGrid[getIndex(y,x+1)] & S) == 0) 
+                if (x+1 == width || y+1 == height)
+                {
+                    secondLine += "════";
+                }
+                else if(((mazeGrid[getIndex(y+1,x)] & E) == 0) && (mazeGrid[getIndex(y,x+1)] & S) == 0) 
                 {
                     secondLine += "═══╦";
                 }
@@ -306,21 +378,26 @@ void Kruskals::printGrid()
             else
             {
 
-                if (((mazeGrid[getIndex(y+1,x)] & E) == 0) && (mazeGrid[getIndex(y,x+1)] & S) == 0) 
+                if (x+1 == width || y+1 == height)
+                {
+                    secondLine += " ";
+                    secondLine += pathChar;
+                    secondLine += " ";
+                    secondLine += "═";
+                }
+                else if(((mazeGrid[getIndex(y+1,x)] & E) == 0) && (mazeGrid[getIndex(y,x+1)] & S) == 0) 
                 {
                     secondLine += " ";
                     secondLine += pathChar;
                     secondLine += " ";
                     secondLine += "╔";
                 }
-                if (((mazeGrid[getIndex(y+1,x)] & E) == 0) && (mazeGrid[getIndex(y,x+1)] & S) != 0) 
+                else if(((mazeGrid[getIndex(y+1,x)] & E) == 0) && (mazeGrid[getIndex(y,x+1)] & S) != 0) 
                 {
-
                     secondLine += " ";
                     secondLine += pathChar;
                     secondLine += " ";
                     secondLine += "║";
-
                 }
                 else
                 {
@@ -330,7 +407,6 @@ void Kruskals::printGrid()
                     secondLine += "═";
                 }
             }
-
 
         }
     
@@ -343,16 +419,7 @@ void Kruskals::printGrid()
     }
 
     cout << mazeString << endl;
-    for ( int i = 0; i < 10; i ++ )
-    {
 
-        for ( int y = 0; y < 10; y ++ )
-        {
-            cout << mazeGrid[getIndex(i, y)];
-
-        }
-        cout << endl;
-    }
 }
 
 
@@ -364,27 +431,28 @@ void Kruskals::run(bool display)
         int x = edges->back()[0];
         int y = edges->back()[1];
         int direction = edges->back()[2];
-
         edges->pop_back();
 
         int nx = x + MOVE_X_DIRECTION[direction];
         int ny = y + MOVE_Y_DIRECTION[direction];
 
-        kTree set_1 = sets[getIndex(x,y)];
-        kTree set_2 = sets[getIndex(nx,ny)];
+        kTree set_1 = sets[getIndex(y,x)];
+        kTree set_2 = sets[getIndex(ny,nx)];
         
         if(!set_1.sameParent(&set_2))
         {
             set_1.connectTrees(&set_2);
-            mazeGrid[getIndex(x,y)] |= direction;
-            mazeGrid[getIndex(nx,ny)] |= OPPOSITE_DIRECTION[direction];
+            mazeGrid[getIndex(y,x)] |= direction;
+            mazeGrid[getIndex(ny,nx)] |= OPPOSITE_DIRECTION[direction];
 
-            pathGrid[getIndex(x,y)] = 1;
-            pathGrid[getIndex(nx,ny)] = 1;
+            pathGrid[getIndex(y,x)] = 1;
+            pathGrid[getIndex(ny,nx)] = 1;
             // PRINT GRID
+            _sleep(2);
             printGrid();
-            pathGrid[getIndex(x,y)] = 0;
-            pathGrid[getIndex(nx,ny)] = 0;
+
+            pathGrid[getIndex(y,x)] = 0;
+            pathGrid[getIndex(ny,nx)] = 0;
         }
     }
 }
@@ -402,9 +470,9 @@ Kruskals::~Kruskals()
 
 int main(){
 
-    Kruskals T = Kruskals(10, 10);
-    T.run(1);
+    Kruskals T = Kruskals(20, 20);
     T.printGrid();
+    T.run(1);
     return 0;
 }
 

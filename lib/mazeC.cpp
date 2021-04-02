@@ -25,9 +25,9 @@ class Maze
 };
 
 
-int Maze::getIndex(int x, int y)
+int Maze::getIndex(int y, int x)
 {
-        return (x * height + y) ;
+        return (y * width + x) ;
 }
 
 Maze::Maze()
