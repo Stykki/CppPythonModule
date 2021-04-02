@@ -447,10 +447,11 @@ void Kruskals::run(bool display)
         cout << "set 1 " << set_1.id << " set 2 " << set_2.id << endl;
         if(!set_1.sameParent(&set_2))
         {
-            int tempId1 = set_1.getParentId();
-            int tempId2 = set_2.getParentId();
-            sets[tempId1].parent = &sets[tempId2];
-            cout << "set 1 " << set_1.id << " set 2 " << set_2.id << endl;
+            int s1Parent = set_1.root()->id;
+            int s2Parent = set_2.root()->id;
+
+            sets[s1Parent].parent = &sets[s2Parent];
+
             mazeGrid[getIndex(y,x)] |= direction;
             mazeGrid[getIndex(ny,nx)] |= OPPOSITE_DIRECTION[direction];
 
@@ -485,6 +486,7 @@ int main(){
     Kruskals T = Kruskals(20, 20);
     T.printGrid();
     T.run(1);
+    T.printGrid();
     return 0;
 }
 
