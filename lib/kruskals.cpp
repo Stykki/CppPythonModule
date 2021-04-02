@@ -66,8 +66,7 @@ bool kTree::sameParent(kTree* otherP)
 
 void kTree::connectTrees(kTree* otherT)
 {
-    kTree* T = otherT->root();
-    T->setParent(this);
+    otherT->root()->setParent(this);
 }
 
 
