@@ -15,9 +15,9 @@ int myrandom (int i) { return std::rand()%i;}
 class kTree
 {
     private:
-        kTree* parent = nullptr;
 
     public:
+        kTree* parent = nullptr;
         int id;
         kTree();
         void setParent(kTree* newP);
@@ -25,11 +25,16 @@ class kTree
         bool sameParent(kTree* otherP);
         void connectTrees(kTree* otherT);
         void setId(int d);
+        int getParentId();
 };
 
 kTree::kTree()
 {
     return;
+}
+
+int kTree::getParentId() {
+    return root()->id;
 }
 
 void kTree::setId(int d)
@@ -44,6 +49,7 @@ void kTree::setParent(kTree* newP)
 
 kTree* kTree::root()
 {
+    // cout << "routing up" << endl;
     if (parent == nullptr)
     {
         return this;
@@ -56,17 +62,17 @@ kTree* kTree::root()
 
 bool kTree::sameParent(kTree* otherP)
 {
-    if(root()->id == otherP->root()->id)
-    {
-        return 1;
-    }
-    return 0;
+    // cout << "root " << root()->id << endl;
+    // cout << "otherP " << otherP->root()->id << endl;
+    return root() == otherP->root();
 }
 
 
 void kTree::connectTrees(kTree* otherT)
 {
     otherT->root()->setParent(this);
+    // cout << "This id " << this->id << endl;
+    // cout << "New root id " << otherT->root()->id << endl;
 }
 
 
@@ -438,9 +444,13 @@ void Kruskals::run(bool display)
         kTree set_1 = sets[getIndex(y,x)];
         kTree set_2 = sets[getIndex(ny,nx)];
         
+        cout << "set 1 " << set_1.id << " set 2 " << set_2.id << endl;
         if(!set_1.sameParent(&set_2))
         {
-            set_1.connectTrees(&set_2);
+            int tempId1 = set_1.getParentId();
+            int tempId2 = set_2.getParentId();
+            sets[tempId1].parent = &sets[tempId2];
+            cout << "set 1 " << set_1.id << " set 2 " << set_2.id << endl;
             mazeGrid[getIndex(y,x)] |= direction;
             mazeGrid[getIndex(ny,nx)] |= OPPOSITE_DIRECTION[direction];
 
@@ -452,6 +462,9 @@ void Kruskals::run(bool display)
 
             pathGrid[getIndex(y,x)] = 0;
             pathGrid[getIndex(ny,nx)] = 0;
+        }
+        else {
+            cout << "yo i failed" << endl;
         }
     }
 }
