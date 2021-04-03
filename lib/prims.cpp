@@ -189,12 +189,11 @@ void Prims::displayNumbers()
 }
 
 int main(){
-    while(1)
-    {
+    
     Prims T = Prims(10, 10);
     T.run(1);
-    T.displayNumbers();
-    }
+    // T.displayNumbers();
+    
 
     return 0;
 }
