@@ -1,10 +1,14 @@
 #include "Python.h"
+#include "./lib/kruskals.cpp"
 
 static PyObject* fyrstObj(PyObject* self, PyObject* args)
 {
     PyObject* ls = PyList_New(0);
     PyList_Append(ls, PyLong_FromLong(1));
     PyList_Append(ls, PyLong_FromLong(1));
+    Kruskals T = Kruskals(20, 20);
+    T.run(1);
+    T.printGrid();
     return ls;
 }
 
