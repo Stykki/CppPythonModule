@@ -8,6 +8,11 @@ class Maze
 {
     protected:
 
+
+        int DELAY = 200;
+        bool DISPLAY = 1;
+
+
         int * cMaze;
 
         int width;
@@ -19,6 +24,7 @@ class Maze
         int * mazeGrid;
         bool * pathGrid;
 
+
     public:
 
         void setDirections(int *NSEW);
@@ -28,11 +34,24 @@ class Maze
         int * getMaze();
         int getIndex(int x, int y);
 
+        void toggleDisplay();
+        void setDelay(int del);
+
         Maze();
 
-
-
 };
+
+void Maze::toggleDisplay()
+{
+
+    DISPLAY = ! DISPLAY;
+}
+
+void Maze::setDelay(int del)
+{
+    DELAY = del;
+}
+
 
 void Maze::printGrid()
 {
@@ -309,6 +328,12 @@ int Maze::getIndex(int y, int x)
 }
 
 Maze::Maze(){};
+
+
+int * Maze::getMaze()
+{
+    return mazeGrid;
+}
 
 void Maze::setDirections(int *NSWE )
 {

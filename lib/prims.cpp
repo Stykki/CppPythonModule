@@ -160,14 +160,24 @@ void Prims::run(bool display)
         pathGrid[getIndex(y2, x2)] = 1;
 
         mark(x,y);
-        printGrid();
-        _sleep(50);
+        
+        if ( DISPLAY )
+            {
+                printGrid();
+                Sleep(DELAY);
+            }
+
 
         pathGrid[getIndex(y, x)] = 0;
         pathGrid[getIndex(y2, x2)] = 0;
     }
-
+    if ( DISPLAY )
+    {
         printGrid();
+        Sleep(DELAY);
+    }
+
+
 }
 
 int Prims::direction(int x, int y, int x2, int y2)
