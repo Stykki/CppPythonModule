@@ -161,16 +161,17 @@ void Kruskals::run(bool display)
             mazeGrid[getIndex(y,x)] |= direction;
             mazeGrid[getIndex(ny,nx)] |= OPPOSITE_DIRECTION[direction];
 
-            if (display)
-            {
                 pathGrid[getIndex(y,x)] = 1;
                 pathGrid[getIndex(ny,nx)] = 1;
                 // PRINT GRID
-                printGrid();
+        if ( DISPLAY )
+        {
+            printGrid();
+            Sleep(DELAY);
+        }
 
                 pathGrid[getIndex(y,x)] = 0;
                 pathGrid[getIndex(ny,nx)] = 0;
-            }
         }
     }
 }
