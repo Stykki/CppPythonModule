@@ -21,7 +21,7 @@ class SideWinder: public Maze
         
     public:
         SideWinder(int w, int h, int we);
-        void run(bool display);
+        void run();
         int * getMaze();
 };
 
@@ -41,7 +41,7 @@ SideWinder::SideWinder(int w, int h, int we = 2)
     }
 }
 
-void SideWinder::run(bool display)
+void SideWinder::run()
 {
     for (int y = 0; y < height; y++)
     {
@@ -56,7 +56,7 @@ void SideWinder::run(bool display)
                 mazeGrid[getIndex(y, cell)] |= N;       // make way north
                 mazeGrid[getIndex(y-1, cell)] |= S;
 
-                if (display)
+                if (DISPLAY)
                 {
                     pathGrid[getIndex(y, cell)] = true;
                     pathGrid[getIndex(y-1, cell)] = true;
@@ -73,7 +73,7 @@ void SideWinder::run(bool display)
                 mazeGrid[getIndex(y, x)] |= E;  // make way east
                 mazeGrid[getIndex(y, x+1)] |= W;
 
-                if (display)
+                if (DISPLAY)
                 {
                     pathGrid[getIndex(y, x)] = true;
                     pathGrid[getIndex(y, x+1)] = true;
@@ -85,7 +85,7 @@ void SideWinder::run(bool display)
             }
         }
     }
-    if (display)
+    if (DISPLAY)
     {
         printGrid();
     }

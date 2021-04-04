@@ -21,7 +21,7 @@ class AldusBroder: public Maze
 
     public:
         AldusBroder(int w, int h);
-        void run(bool display);
+        void run();
         int * getMaze();
 
 };
@@ -43,12 +43,12 @@ AldusBroder::AldusBroder(int w, int h)
     remaining = width * height - 1;     // cells left untouched
 }
 
-void AldusBroder::run(bool display)
+void AldusBroder::run()
 {
     int x = rand() % width;
     int y = rand() % height;
     
-    if (display)
+    if (DISPLAY)
     {
         printGrid();
     }
@@ -67,10 +67,10 @@ void AldusBroder::run(bool display)
                 if (mazeGrid[getIndex(newY, newX)] == 0)    // if position in grid is untouched
                 {
 
-                    mazeGrid[getIndex(y, x)] |= dir[i];     // make way to direction
-                    mazeGrid[getIndex(newY, newX)] |= OPPOSITE_DIRECTION[dir[i]];   // 
+                    mazeGrid[getIndex(y, x)] |= dir[i];     // make way in direction
+                    mazeGrid[getIndex(newY, newX)] |= OPPOSITE_DIRECTION[dir[i]];   // make way in opposite direction
                     remaining--;
-                    if (display)
+                    if (DISPLAY)
                     {
                         pathGrid[getIndex(y, x)] = 1;
                         pathGrid[getIndex(newY, newX)] = 1;
@@ -87,7 +87,7 @@ void AldusBroder::run(bool display)
             }
         }
     }
-    if (display)
+    if (DISPLAY)
     {
         printGrid();
     }
@@ -95,7 +95,7 @@ void AldusBroder::run(bool display)
 
 bool AldusBroder::isPosValid(int x, int y)
 {
-    if ((x >= 0) && (y >= 0) && (x < height) && (y < width))
+    if ((x >= 0) && (y >= 0) && (x < width) && (y < height))
     {
         return 1;
     }

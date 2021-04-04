@@ -34,7 +34,7 @@ class Prims: public Maze
 
     public:
 
-        void run(bool display);
+        void run();
         void displayNumbers();
         int * getMaze();
 
@@ -52,7 +52,7 @@ Prims::Prims(int w, int h)
     width = w;
     height = h;
     mazeGrid = new int[width * height];
-    pathGrid = new bool[width * height];
+    pathGrid = new bool[width * height];    // used for displaying where in the grid we are at every iteration
 
     for (int i = 0; i < width*height; i++)
     {
@@ -128,7 +128,7 @@ void Prims::mark(int x, int y)
     addMark(x, y+1);
 }
 
-void Prims::run(bool display)
+void Prims::run()
 {
     mark();
     while (markedPoints.size() != 0)

@@ -92,7 +92,7 @@ class Kruskals: public Maze
 
         Kruskals(int w, int h);
         ~Kruskals();
-        void run(bool display);
+        void run();
         void printSetId();
         void printDigits();
         int * getMaze();
@@ -108,7 +108,7 @@ Kruskals::Kruskals(int w, int h)
     width = w;
     height = h;
     mazeGrid = new int[width * height];
-    pathGrid = new bool[width * height];
+    pathGrid = new bool[width * height];    // used for displaying where in the grid we are at every iteration
     sets = new kTree[width * height]; 
     for (int i = 0; i < width*height; i++)
     {
@@ -140,7 +140,7 @@ Kruskals::Kruskals(int w, int h)
 
 
 
-void Kruskals::run(bool display)
+void Kruskals::run()
 {
     while(edges->size() > 0)
     {

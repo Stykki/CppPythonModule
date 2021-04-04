@@ -31,7 +31,7 @@ class RecursiveBacktrack: public Maze
     public:
 
         RecursiveBacktrack(int w, int h);
-        void run(bool display);
+        void run();
         void setDelay(int del);
         int * getMaze();
 };
@@ -43,7 +43,7 @@ RecursiveBacktrack::RecursiveBacktrack(int w, int h)
     width = w;
     height = h;
     mazeGrid = new int[width * height];
-    pathGrid = new bool[width * height];
+    pathGrid = new bool[width * height];    // used for displaying where in the grid we are at every iteration
     for (int i = 0; i < width*height; i++)
     {
         mazeGrid[i] = 0;
@@ -84,10 +84,10 @@ void RecursiveBacktrack::carvePassagesFrom(int x, int y)
         int newY = y + MOVE_Y_DIRECTION[dir[i]];
         if (isPosValid(newX, newY))
         {
-            mazeGrid[getIndex(y, x)] |= dir[i];
+            mazeGrid[getIndex(y, x)] |= dir[i];     // make way in direction
 
 
-            mazeGrid[getIndex(newY, newX)] |= OPPOSITE_DIRECTION[dir[i]];
+            mazeGrid[getIndex(newY, newX)] |= OPPOSITE_DIRECTION[dir[i]];   // make way in opposite direction
             pathGrid[getIndex(y, x)] = 1;
             pathGrid[getIndex(newY, newX)] = 1;
 
@@ -98,7 +98,7 @@ void RecursiveBacktrack::carvePassagesFrom(int x, int y)
             }
 
 
-            carvePassagesFrom(newX, newY);
+            carvePassagesFrom(newX, newY);      // recursively keep going until dead end is met
 
             pathGrid[getIndex(y, x)] = 0;
             pathGrid[getIndex(newY, newX)] = 0;
@@ -112,7 +112,7 @@ void RecursiveBacktrack::carvePassagesFrom(int x, int y)
     }
 }
 
-void RecursiveBacktrack::run(bool display)
+void RecursiveBacktrack::run()
 {
     carvePassagesFrom(0,0);
 }
