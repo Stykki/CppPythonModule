@@ -128,22 +128,27 @@ class Game():
         line1 = ""
         line2 = ""
         line3 = ""
+        outpLine = ""
         for x in range(len(self.grid)):
             for y in range(len(self.grid[0])):
-                line1 += DISPMAPT[self.grid[x][y]].split("-")[0]
-                line2 += DISPMAPT[self.grid[x][y]].split("-")[1]
+                line1 += DISPMAPT[(self.grid[x][y] & 0xF)].split("-")[0]
+                line2 += DISPMAPT[(self.grid[x][y] & 0xF)].split("-")[1]
                 if(self.playerY == y and self.playerX == x):
                     line2 += "P"
                 elif(self.goalY== y and self.goalX== x):
                     line2 += "G"
                 else:
                     line2 += " "
-                line2 += DISPMAPT[self.grid[x][y]].split("-")[2]
-                line3 += DISPMAPT[self.grid[x][y]].split("-")[3]
-            print(line1)
-            print(line2)
-            print(line3)
+                line2 += DISPMAPT[(self.grid[x][y] & 0xF)].split("-")[2]
+                line3 += DISPMAPT[(self.grid[x][y] & 0xF)].split("-")[3]
+            outpLine += line1
+            outpLine += "\n"
+            outpLine += line2
+            outpLine += "\n"
+            outpLine += line3
+            outpLine += "\n"
             line1, line2, line3 = "", "", ""
+        sys.stdout.write(outpLine)
 
     def makeMove(self):
         nx,ny =-1,-1
@@ -187,11 +192,8 @@ class Game():
                 break
 
 
-# print(cpp_module_01.generateKruskals(40, 20, 0))
-# print(cpp_module_01.generatePrims(40, 20, 0))
-# print(cpp_module_01.generateRecursiveBacktrack(40, 20, 0))
 
-lis = cpp_module_01.generateKruskals(14,14,0)
+lis = cpp_module_01.generatePrims(6,6,0)
 print(lis)
 d = Game(lis)
 d.play()
