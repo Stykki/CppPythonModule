@@ -34,6 +34,7 @@ class Maze
         int getIndex(int x, int y);
 
         void toggleDisplay();
+
         void setDelay(int del);
 
         Maze();

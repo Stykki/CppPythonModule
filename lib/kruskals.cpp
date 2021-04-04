@@ -192,3 +192,6 @@ int * Kruskals::getMaze()
 {
     return mazeGrid;
 }
+
+
+
