@@ -28,16 +28,11 @@ class kTree
         bool sameParent(kTree* otherP);
         void connectTrees(kTree* otherT);
         void setId(int d);
-        int getParentId();
 };
 
 kTree::kTree()
 {
     return;
-}
-
-int kTree::getParentId() {
-    return root()->id;
 }
 
 void kTree::setId(int d)
@@ -52,7 +47,6 @@ void kTree::setParent(kTree* newP)
 
 kTree* kTree::root()
 {
-    // cout << "routing up" << endl;
     if (parent == nullptr)
     {
         return this;
@@ -65,17 +59,17 @@ kTree* kTree::root()
 
 bool kTree::sameParent(kTree* otherP)
 {
-    // cout << "root " << root()->id << endl;
-    // cout << "otherP " << otherP->root()->id << endl;
-    return root() == otherP->root();
+    if(root()->id == otherP->root()->id)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 
 void kTree::connectTrees(kTree* otherT)
 {
     otherT->root()->setParent(this);
-    // cout << "This id " << this->id << endl;
-    // cout << "New root id " << otherT->root()->id << endl;
 }
 
 
@@ -161,7 +155,6 @@ void Kruskals::run(bool display)
         kTree set_1 = sets[getIndex(y,x)];
         kTree set_2 = sets[getIndex(ny,nx)];
         
-        cout << "set 1 " << set_1.id << " set 2 " << set_2.id << endl;
         if(!set_1.sameParent(&set_2))
         {
             int s1Parent = set_1.root()->id;
@@ -184,9 +177,6 @@ void Kruskals::run(bool display)
                 pathGrid[getIndex(y,x)] = 0;
                 pathGrid[getIndex(ny,nx)] = 0;
         }
-        else {
-            cout << "yo i failed" << endl;
-        }
     }
 }
 
@@ -202,4 +192,3 @@ int * Kruskals::getMaze()
 {
     return mazeGrid;
 }
-

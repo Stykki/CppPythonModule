@@ -193,10 +193,7 @@ class Game():
 
 
 
-lis = cpp_module_01.generatePrims(6,6,0)
-print(lis)
-d = Game(lis)
-d.play()
+print(cpp_module_01.generateKruskals(12,6))
 
 
 

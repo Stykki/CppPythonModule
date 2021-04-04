@@ -2,7 +2,7 @@
 #include <random>
 #include <algorithm>
 #include <vector>
-#include "mazeC.cpp"
+#include "aldusBroder.cpp"
 #include <string>
 
 class SideWinder: public Maze
@@ -22,6 +22,7 @@ class SideWinder: public Maze
     public:
         SideWinder(int w, int h, int we);
         void run(bool display);
+        int * getMaze();
 };
 
 SideWinder::SideWinder(int w, int h, int we = 2)
@@ -89,9 +90,8 @@ void SideWinder::run(bool display)
     }
 }
 
-
-int main()
+int* SideWinder::getMaze()
 {
-    SideWinder S = SideWinder(10, 10);
-    S.run(1);
+    return mazeGrid;
 }
+

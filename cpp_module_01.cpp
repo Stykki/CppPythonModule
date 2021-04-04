@@ -1,11 +1,11 @@
 #include "Python.h"
-#include "./lib/recursiveBacktracking.cpp"
+#include "./lib/sidewinder.cpp"
 
 
 static PyObject* generateKruskals(PyObject* self, PyObject* args)
 {
-    int w,h,d;
-    PyArg_ParseTuple(args,"iii", &w, &h, &d);
+    int w, h, d=0, del=2;
+    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
     PyObject* ls = PyList_New(0);
     Kruskals* T = new Kruskals(w, h);
     if ( d != 1){
@@ -29,8 +29,9 @@ static PyObject* generateKruskals(PyObject* self, PyObject* args)
 
 static PyObject* generatePrims(PyObject* self, PyObject* args)
 {
-    int w,h,d;
-    PyArg_ParseTuple(args,"iii", &w, &h, &d);
+    int w, h, d = 0, del = 2;
+    
+    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
 
     PyObject* ls = PyList_New(0);
     Prims *P = new Prims(w, h);
@@ -57,8 +58,8 @@ static PyObject* generatePrims(PyObject* self, PyObject* args)
 
 static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
 {
-    int w,h,d;
-    PyArg_ParseTuple(args,"iii", &w, &h, &d);
+    int w, h, d=0, del=2;
+    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
 
     
     RecursiveBacktrack *P = new RecursiveBacktrack(w, h);
@@ -84,10 +85,71 @@ static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
     return ls;
 }
 
+
+static PyObject* generateAldusBroder(PyObject* self, PyObject* args)
+{
+    int w, h, d=0, del=2;
+    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
+
+    
+    AldusBroder *P = new AldusBroder(w, h);
+    PyObject* ls = PyList_New(0);
+
+    if ( d != 1){
+        P->toggleDisplay();
+    }
+
+    P->run(1);
+    int * mz = P->getMaze();
+    for(int i = 0; i < h; i++)
+    {
+        PyObject* temp = PyList_New(0);
+        for ( int j = 0; j < w; j++)
+        {
+            PyList_Append(temp, PyLong_FromLong(mz[i*w+j]));
+        }
+        PyList_Append(ls, temp);
+    }
+    P->printGrid();
+    delete P;
+    return ls;
+}
+
+static PyObject* generateSideWinder(PyObject* self, PyObject* args)
+{
+    int w, h, d=0, del=2;
+    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
+
+    
+    PyObject* ls = PyList_New(0);
+    SideWinder *P = new SideWinder(w, h);
+
+    if ( d != 1){
+        P->toggleDisplay();
+    }
+
+    P->run(1);
+    int * mz = P->getMaze();
+    for(int i = 0; i < h; i++)
+    {
+        PyObject* temp = PyList_New(0);
+        for ( int j = 0; j < w; j++)
+        {
+            PyList_Append(temp, PyLong_FromLong(mz[i*w+j]));
+        }
+        PyList_Append(ls, temp);
+    }
+    P->printGrid();
+    delete P;
+    return ls;
+}
+
 static PyMethodDef mainMethods[] = {
-    {"generateKruskals", generateKruskals, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, returns a 2d array"},
-    {"generatePrims", generatePrims, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, returns a 2d array"},
-    {"generateRecursiveBacktrack", generateRecursiveBacktrack, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, returns a 2d array"},
+    {"generateKruskals", generateKruskals, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, int Delay returns a 2d array"},
+    {"generatePrims", generatePrims, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, int Delay returns a 2d array"},
+    {"generateRecursiveBacktrack", generateRecursiveBacktrack, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, int Delay returns a 2d array"},
+    {"generateAldusBroder", generateAldusBroder, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, int Delay returns a 2d array"},
+    {"generateSideWinder", generateSideWinder, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, int Delay returns a 2d array"},
     {NULL, NULL, 0, NULL}
 };
 
