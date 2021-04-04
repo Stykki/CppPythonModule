@@ -76,7 +76,7 @@ void AldusBroder::run(bool display)
                         printGrid();
                         pathGrid[getIndex(y, x)] = 0;
                         pathGrid[getIndex(newY, newX)] = 0;
-                        Sleep(100);
+                        Sleep(10);
                     }
                 }
                 // if (display)
@@ -94,7 +94,10 @@ void AldusBroder::run(bool display)
             }
         }
     }
-    printGrid();
+    if (display)
+    {
+        printGrid();
+    }
 }
 
 bool AldusBroder::isPosValid(int x, int y)
