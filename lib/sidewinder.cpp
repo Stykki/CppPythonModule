@@ -48,11 +48,12 @@ void SideWinder::run(bool display)
         int runStart = 0;
         for (int x = 0; x < width; x++)
         {
-
+            
             if ((y > 0) && ((x+1 == width) || ((rand() % weight) == 0)))
+            // run 
             {
-                int cell = runStart + rand() % (x - runStart + 1);
-                mazeGrid[getIndex(y, cell)] |= N;
+                int cell = runStart + rand() % (x - runStart + 1);  // get new cell 
+                mazeGrid[getIndex(y, cell)] |= N;       // make way north
                 mazeGrid[getIndex(y-1, cell)] |= S;
 
                 if (display)
@@ -60,7 +61,7 @@ void SideWinder::run(bool display)
                     pathGrid[getIndex(y, cell)] = true;
                     pathGrid[getIndex(y-1, cell)] = true;
                     printGrid();
-                    Sleep(10);
+                    Sleep(DELAY);
                     pathGrid[getIndex(y, cell)] = false;
                     pathGrid[getIndex(y-1, cell)] = false;
                 }
@@ -69,7 +70,7 @@ void SideWinder::run(bool display)
             }
             else if (x+1 < width)
             {
-                mazeGrid[getIndex(y, x)] |= E;
+                mazeGrid[getIndex(y, x)] |= E;  // make way east
                 mazeGrid[getIndex(y, x+1)] |= W;
 
                 if (display)
@@ -77,7 +78,7 @@ void SideWinder::run(bool display)
                     pathGrid[getIndex(y, x)] = true;
                     pathGrid[getIndex(y, x+1)] = true;
                     printGrid();
-                    Sleep(10);
+                    Sleep(DELAY);
                     pathGrid[getIndex(y, x)] = false;
                     pathGrid[getIndex(y, x+1)] = false;
                 }

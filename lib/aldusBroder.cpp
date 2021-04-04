@@ -80,15 +80,7 @@ void AldusBroder::run(bool display)
                         Sleep(DELAY);
                     }
                 }
-                // if (display)
-                // {
-                //     pathGrid[getIndex(y, x)] = 1;
-                //     pathGrid[getIndex(newY, newX)] = 1;
-                //     printGrid();
-                //     pathGrid[getIndex(y, x)] = 0;
-                //     pathGrid[getIndex(newY, newX)] = 0;
-                //     Sleep(100);
-                // }
+
                 x = newX;
                 y = newY;
                 break;
