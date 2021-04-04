@@ -11,6 +11,7 @@ static PyObject* generateKruskals(PyObject* self, PyObject* args)
     if ( d != 1){
         T->toggleDisplay();
     }
+    T->setDelay(del);
     T->run(1);
     int * mz = T->getMaze();
     for(int i = 0; i < h; i++)
@@ -39,7 +40,7 @@ static PyObject* generatePrims(PyObject* self, PyObject* args)
     if ( d != 1){
         P->toggleDisplay();
     }
-
+    P->setDelay(del);
     P->run(1);
     int * mz = P->getMaze();
     for(int i = 0; i < h; i++)
@@ -68,6 +69,7 @@ static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
     if ( d != 1){
         P->toggleDisplay();
     }
+    P->setDelay(del);
 
     P->run(1);
     int * mz = P->getMaze();
@@ -98,6 +100,7 @@ static PyObject* generateAldusBroder(PyObject* self, PyObject* args)
     if ( d != 1){
         P->toggleDisplay();
     }
+    P->setDelay(del);
 
     P->run(1);
     int * mz = P->getMaze();
@@ -127,6 +130,7 @@ static PyObject* generateSideWinder(PyObject* self, PyObject* args)
     if ( d != 1){
         P->toggleDisplay();
     }
+    P->setDelay(del);
 
     P->run(1);
     int * mz = P->getMaze();

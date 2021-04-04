@@ -193,7 +193,7 @@ class Game():
 
 
 
-print(cpp_module_01.generateKruskals(12,6))
+print(cpp_module_01.generatePrims(3,6,1,1000))
 
 
 
