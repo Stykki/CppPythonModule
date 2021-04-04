@@ -6,17 +6,17 @@ import cpp_module_01
 N, S, E, W = 1, 2, 4, 8
 
 PD = {
-        "N": ( -1, 0),
-        "W": ( 0, -1),
+        "W": ( -1, 0),
+        "A": ( 0, -1),
         "S": ( 1, 0),
-        "E": ( 0, 1),
+        "D": ( 0, 1),
         }
 
 VM = {
-        "N" : 1,
-        "S" : 2,
-        "E" : 4,
-        "W" : 8
+        "S" : 1,
+        "D" : 2,
+        "W" : 4,
+        "A" : 8
         }
 
 
@@ -31,9 +31,11 @@ EW = E+W
 
 NSW = N+S+W
 NSE = N+S+E
+NEW = N+E+W
 
 
 SNEW = S+N+E+W
+SEW = S+E+W
 
 
 DISPMAP = {
@@ -64,10 +66,50 @@ DISPMAP = {
 
         NSE: "    ┃- -  ┃-    ┃",
 
+        NEW: "     -  -  -━━━━━",
         
+        SEW: "━━━━━-  -  -     ",
+
         SNEW:"     -  -  -     ",
 
         }
+
+DISPMAPT = {
+
+        0: "━━━━━",
+
+        N: "#   #-# - #-#####",
+
+        W: "#####-# -  -#####",
+
+        S: "#####-# - #-#   #",
+
+        E: "#####-  - #-#####",
+
+        NS: "#   #-# - #-#   #",
+
+        NW: "#    -# -  -#####",
+
+        NE: "    #-  - #-#####",
+
+        EW: "#####-  -  -#####",
+
+        SW: "#####-# -  -#    ",
+
+        NSW: "#    -# -  -#    ",
+
+        SE: "#####-  - #-    #",
+
+        NSE: "    #- -  #-    #",
+
+        NEW: "     -  -  -#####",
+        
+        SEW: "#####-  -  -     ",
+
+        SNEW:"     -  -  -     ",
+
+        }
+
 
 
 class Game():
@@ -88,16 +130,16 @@ class Game():
         line3 = ""
         for x in range(len(self.grid)):
             for y in range(len(self.grid[0])):
-                line1 += DISPMAP[self.grid[x][y]].split("-")[0]
-                line2 += DISPMAP[self.grid[x][y]].split("-")[1]
+                line1 += DISPMAPT[self.grid[x][y]].split("-")[0]
+                line2 += DISPMAPT[self.grid[x][y]].split("-")[1]
                 if(self.playerY == y and self.playerX == x):
                     line2 += "P"
                 elif(self.goalY== y and self.goalX== x):
                     line2 += "G"
                 else:
                     line2 += " "
-                line2 += DISPMAP[self.grid[x][y]].split("-")[2]
-                line3 += DISPMAP[self.grid[x][y]].split("-")[3]
+                line2 += DISPMAPT[self.grid[x][y]].split("-")[2]
+                line3 += DISPMAPT[self.grid[x][y]].split("-")[3]
             print(line1)
             print(line2)
             print(line3)
@@ -108,16 +150,16 @@ class Game():
         while(not(self.moveIsValid(nx,ny))):
             validMoves = []
             if ( self.grid[self.playerX][self.playerY] & N != 0):
-                validMoves.append("N")
+                validMoves.append("W")
 
             if ( self.grid[self.playerX][self.playerY] & S != 0):
                 validMoves.append("S")
 
             if ( self.grid[self.playerX][self.playerY] & E != 0):
-                validMoves.append("W")
+                validMoves.append("A")
 
             if ( self.grid[self.playerX][self.playerY] & W != 0):
-                validMoves.append("E")
+                validMoves.append("D")
 
             print(validMoves)
             inp = msvcrt.getch().decode("utf-8").upper()
@@ -149,7 +191,7 @@ class Game():
 # print(cpp_module_01.generatePrims(40, 20, 0))
 # print(cpp_module_01.generateRecursiveBacktrack(40, 20, 0))
 
-lis = cpp_module_01.generateKruskals(4,4,0)
+lis = cpp_module_01.generateKruskals(14,14,0)
 print(lis)
 d = Game(lis)
 d.play()
