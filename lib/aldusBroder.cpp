@@ -2,7 +2,7 @@
 #include <random>
 #include <algorithm>
 #include <vector>
-#include "mazeC.cpp"
+#include "recursiveBacktracking.cpp"
 #include <string>
 
 class AldusBroder: public Maze
@@ -22,6 +22,7 @@ class AldusBroder: public Maze
     public:
         AldusBroder(int w, int h);
         void run(bool display);
+        int * getMaze();
 
 };
 
@@ -101,9 +102,9 @@ bool AldusBroder::isPosValid(int x, int y)
     return 0;
 }
 
-
-int main()
+int * AldusBroder::getMaze()
 {
-    AldusBroder A = AldusBroder(20,20);
-    A.run(1);
+    return mazeGrid;
 }
+
+
