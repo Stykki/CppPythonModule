@@ -5,7 +5,10 @@
 #include <algorithm>
 #include <random>
 #include <vector>
+
+#ifndef Maze
 #include "mazeC.cpp"
+#endif
 
 
 using namespace std;
@@ -92,6 +95,7 @@ class Kruskals: public Maze
         void run(bool display);
         void printSetId();
         void printDigits();
+        int * getMaze();
 
 
 
@@ -184,14 +188,8 @@ Kruskals::~Kruskals()
     delete [] sets;
 }
 
-
-
-
-int main(){
-
-    Kruskals T = Kruskals(20, 20);
-    T.printGrid();
-    T.run(0);
-    T.printGrid();
-    return 0;
+int * Kruskals::getMaze()
+{
+    return mazeGrid;
 }
+

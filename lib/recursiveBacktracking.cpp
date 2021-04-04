@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <random>
 #include <vector>
-#include "mazeC.cpp"
+#include "prims.cpp"
 
 using namespace std;
 
@@ -34,6 +34,7 @@ class RecursiveBacktrack: public Maze
         RecursiveBacktrack(int w, int h);
         void run(bool display);
         void setDelay(int del);
+        int * getMaze();
 };
 
 RecursiveBacktrack::RecursiveBacktrack(int w, int h)
@@ -62,7 +63,7 @@ void RecursiveBacktrack::setDelay(int del)
 
 bool RecursiveBacktrack::isPosValid(int x, int y)
 {
-    if ((x >= 0) && (y >= 0) && (x < height) && (y < width))
+    if ((x >= 0) && (y >= 0) && (x < width) && (y < height))
     {
         if (mazeGrid[getIndex(y,x)] == 0)
         {
@@ -117,14 +118,9 @@ void RecursiveBacktrack::run(bool display)
     carvePassagesFrom(0,0);
 }
 
-int main(){
-    RecursiveBacktrack T = RecursiveBacktrack(20,20);
-
-    T.setDelay(1);
-    T.run(1);
-    T.printGrid();
-
-
-    return 0;
+int* RecursiveBacktrack::getMaze()
+{
+    return mazeGrid;
 }
+
 

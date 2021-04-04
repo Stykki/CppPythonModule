@@ -31,7 +31,6 @@ class Maze
         void run(bool display);
         void printGrid();
 
-        int * getMaze();
         int getIndex(int x, int y);
 
         void toggleDisplay();
@@ -330,10 +329,7 @@ int Maze::getIndex(int y, int x)
 Maze::Maze(){};
 
 
-int * Maze::getMaze()
-{
-    return mazeGrid;
-}
+
 
 void Maze::setDirections(int *NSWE )
 {

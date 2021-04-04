@@ -1,9 +1,10 @@
 #include <iostream>
+#include <Windows.h>
 #include <random>
 #include <vector>
 #include <tuple>
-#include "mazeC.cpp"
 
+#include "kruskals.cpp"
 
 using namespace std;
 
@@ -37,16 +38,18 @@ class Prims: public Maze
 
         void run(bool display);
         void displayNumbers();
+        int * getMaze();
 
         Prims(int w, int h);
+        ~Prims(); 
+
+
 
 };
 
 Prims::Prims(int w, int h)
 {
     int NSWE[4] = {N,S,W,E};
-    width = w;
-    height = h;
     Maze::setDirections(NSWE);
     width = w;
     height = h;
@@ -73,7 +76,7 @@ tuple<int,int> Prims::getRandomNeighbour(int y, int x)
 
         }
     }
-    if (x+1 < height)
+    if (x+1 < width)
     {
         if ((mazeGrid[getIndex(y,x+1)] & MARKED) != 0)
         {
@@ -87,7 +90,7 @@ tuple<int,int> Prims::getRandomNeighbour(int y, int x)
             nbrs.push_back(tuple<int, int>({y-1, x}));
         }
     }
-    if (y+1 < width)
+    if (y+1 < height)
     {
         if ((mazeGrid[getIndex(y+1,x)] & MARKED) != 0)
         {
@@ -102,12 +105,12 @@ tuple<int,int> Prims::getRandomNeighbour(int y, int x)
 
 void Prims::addMark(int x, int y)
 {
-    if ((x >= 0) && (y >= 0) && (x < height) && (y < width))
+    if ((x >= 0) && (y >= 0) && (x < width) && (y < height))
     {
         if (mazeGrid[getIndex(y,x)] == 0)
         {
-        mazeGrid[getIndex(y,x)] |= AVAILABLE;
-        markedPoints.push_back(tuple<int,int>(y,x));
+            mazeGrid[getIndex(y,x)] |= AVAILABLE;
+            markedPoints.push_back(tuple<int,int>(y,x));
         }
     }
 
@@ -130,7 +133,6 @@ void Prims::mark(int x, int y)
 void Prims::run(bool display)
 {
     mark();
-    cout << "MARKED SIZE " << markedPoints.size() << endl;
     while (markedPoints.size() != 0)
     {
         int x,y,x2,y2;
@@ -149,9 +151,6 @@ void Prims::run(bool display)
 
 
         int dir = direction(x, y, x2, y2);
-        cout << "Pos normal y " << y << " x " << x << endl;
-        cout << "Pos nbr    y " << y2 << " x " << x2 << endl;
-        cout << "Directon   " << dir << endl;
 
         mazeGrid[getIndex(y, x)] |= dir;
         mazeGrid[getIndex(y2, x2)] |= OPPOSITE_DIRECTION[dir];
@@ -187,25 +186,20 @@ int Prims::direction(int x, int y, int x2, int y2)
     if ( y < y2){return S;}
     else{return N;}
 }
-void Prims::displayNumbers()
+
+
+int * Prims::getMaze()
 {
-    for (int i = 0; i<10; i++){
-        for (int d = 0; d<10; d++){
-            cout << "[" << mazeGrid[getIndex(i,d)] << "]";
-        }
-        cout << endl;
-    }
+    return mazeGrid;
+}
+
+Prims::~Prims()
+{
+    delete [] mazeGrid;
+    delete [] pathGrid;
 
 }
 
-int main(){
-    while(1)
-    {
-    Prims T = Prims(10, 10);
-    T.run(1);
-    T.displayNumbers();
-    }
 
-    return 0;
-}
+
 

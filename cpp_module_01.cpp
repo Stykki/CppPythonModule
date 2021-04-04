@@ -1,19 +1,93 @@
 #include "Python.h"
-#include "./lib/kruskals.cpp"
+#include "./lib/recursiveBacktracking.cpp"
 
-static PyObject* fyrstObj(PyObject* self, PyObject* args)
+
+static PyObject* generateKruskals(PyObject* self, PyObject* args)
 {
+    int w,h,d;
+    PyArg_ParseTuple(args,"iii", &w, &h, &d);
     PyObject* ls = PyList_New(0);
-    PyList_Append(ls, PyLong_FromLong(1));
-    PyList_Append(ls, PyLong_FromLong(1));
-    Kruskals T = Kruskals(20, 20);
-    T.run(1);
-    T.printGrid();
+    Kruskals* T = new Kruskals(w, h);
+    if ( d != 1){
+        T->toggleDisplay();
+    }
+    T->run(1);
+    int * mz = T->getMaze();
+    for(int i = 0; i < h; i++)
+    {
+        PyObject* temp = PyList_New(0);
+        for ( int j = 0; j < w; j++)
+        {
+            PyList_Append(temp, PyLong_FromLong(mz[i*w+j]));
+        }
+        PyList_Append(ls, temp);
+    }
+    T->printGrid();
+    delete T;
+    return ls;
+}
+
+static PyObject* generatePrims(PyObject* self, PyObject* args)
+{
+    int w,h,d;
+    PyArg_ParseTuple(args,"iii", &w, &h, &d);
+
+    PyObject* ls = PyList_New(0);
+    Prims *P = new Prims(w, h);
+
+    if ( d != 1){
+        P->toggleDisplay();
+    }
+
+    P->run(1);
+    int * mz = P->getMaze();
+    for(int i = 0; i < h; i++)
+    {
+        PyObject* temp = PyList_New(0);
+        for ( int j = 0; j < w; j++)
+        {
+            PyList_Append(temp, PyLong_FromLong(mz[i*w+j]));
+        }
+        PyList_Append(ls, temp);
+    }
+    P->printGrid();
+    delete P;
+    return ls;
+}
+
+static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
+{
+    int w,h,d;
+    PyArg_ParseTuple(args,"iii", &w, &h, &d);
+
+    
+    RecursiveBacktrack *P = new RecursiveBacktrack(w, h);
+    PyObject* ls = PyList_New(0);
+
+    if ( d != 1){
+        P->toggleDisplay();
+    }
+
+    P->run(1);
+    int * mz = P->getMaze();
+    for(int i = 0; i < h; i++)
+    {
+        PyObject* temp = PyList_New(0);
+        for ( int j = 0; j < w; j++)
+        {
+            PyList_Append(temp, PyLong_FromLong(mz[i*w+j]));
+        }
+        PyList_Append(ls, temp);
+    }
+    P->printGrid();
+    delete P;
     return ls;
 }
 
 static PyMethodDef mainMethods[] = {
-    {"fyrstObj", fyrstObj, METH_VARARGS,"return a hello string"},
+    {"generateKruskals", generateKruskals, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, returns a 2d array"},
+    {"generatePrims", generatePrims, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, returns a 2d array"},
+    {"generateRecursiveBacktrack", generateRecursiveBacktrack, METH_VARARGS,"Parameters, int Width , int Heigt, bool Display, returns a 2d array"},
     {NULL, NULL, 0, NULL}
 };
 
