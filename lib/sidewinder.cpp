@@ -30,9 +30,9 @@ SideWinder::SideWinder(int w, int h, int we = 2)
     Maze::setDirections(NSWE);
     width = w;
     height = h;
-    weight = we;
+    weight = we;    // weight for calculating a random stop to the current run
     mazeGrid = new int[width * height];
-    pathGrid = new bool[width * height];
+    pathGrid = new bool[width * height];    // used for displaying where in the grid we are at every iteration
     for (int i = 0; i < width*height; i++)
     {
         mazeGrid[i] = 0;
@@ -49,7 +49,7 @@ void SideWinder::run(bool display)
         {
             
             if ((y > 0) && ((x+1 == width) || ((rand() % weight) == 0)))
-            // run 
+//  dont stop at first line,   stop if at end or randomly got 0 from random calculation
             {
                 int cell = runStart + rand() % (x - runStart + 1);  // get new cell 
                 mazeGrid[getIndex(y, cell)] |= N;       // make way north
@@ -67,7 +67,7 @@ void SideWinder::run(bool display)
 
                 runStart = x+1;
             }
-            else if (x+1 < width)
+            else if (x+1 < width)   // dont make way east if at end
             {
                 mazeGrid[getIndex(y, x)] |= E;  // make way east
                 mazeGrid[getIndex(y, x+1)] |= W;

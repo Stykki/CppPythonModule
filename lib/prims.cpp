@@ -32,8 +32,6 @@ class Prims: public Maze
 
         int direction(int x, int y, int x2, int y2);
 
-        
-
     public:
 
         void run(bool display);

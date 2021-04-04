@@ -33,13 +33,13 @@ AldusBroder::AldusBroder(int w, int h)
     height = h;
 
     mazeGrid = new int[width * height];
-    pathGrid = new bool[width * height];
+    pathGrid = new bool[width * height];    // used for displaying where in the grid we are at every iteration
     for (int i = 0; i < width*height; i++)
     {
         mazeGrid[i] = 0;
         pathGrid[i] = 0;
     }
-    remaining = width * height - 1;
+    remaining = width * height - 1;     // cells left untouched
 }
 
 void AldusBroder::run(bool display)
@@ -52,22 +52,22 @@ void AldusBroder::run(bool display)
         printGrid();
     }
 
-    while (remaining > 0)
+    while (remaining > 0)   // while there are cells that have not been touched
     {
         vector<int> dir = { N,S,E,W };
-        random_shuffle(dir.begin(), dir.end());
-        for (int i = 0; i < 4; i++)
+        random_shuffle(dir.begin(), dir.end());     // shuffle directions
+        for (int i = 0; i < 4; i++)     // iterate through directions (random direction at front each time)
         {
             int newX = x + MOVE_X_DIRECTION[dir[i]];
             int newY = y + MOVE_Y_DIRECTION[dir[i]];
 
             if (isPosValid(newX, newY))
             {
-                if (mazeGrid[getIndex(newY, newX)] == 0)
+                if (mazeGrid[getIndex(newY, newX)] == 0)    // if position in grid is untouched
                 {
 
-                    mazeGrid[getIndex(y, x)] |= dir[i];
-                    mazeGrid[getIndex(newY, newX)] |= OPPOSITE_DIRECTION[dir[i]];
+                    mazeGrid[getIndex(y, x)] |= dir[i];     // make way to direction
+                    mazeGrid[getIndex(newY, newX)] |= OPPOSITE_DIRECTION[dir[i]];   // 
                     remaining--;
                     if (display)
                     {
