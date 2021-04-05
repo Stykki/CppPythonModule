@@ -193,16 +193,16 @@ static PyMethodDef mainMethods[] = {
     {NULL, NULL, 0, NULL}
 };
 
-static PyModuleDef cpp_module_01 = {
+static PyModuleDef maze_generator = {
     PyModuleDef_HEAD_INIT,
-    "cpp_module_01", "This is a module",
+    "maze_generator", "This is a module",
     -1,
     mainMethods
 };
 
-PyMODINIT_FUNC PyInit_cpp_module_01(void){
+PyMODINIT_FUNC PyInit_maze_generator(void){
 
-    return PyModule_Create(&cpp_module_01);
+    return PyModule_Create(&maze_generator);
 }
 
 

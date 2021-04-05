@@ -2,7 +2,7 @@ import os
 import random
 import msvcrt
 import sys
-import cpp_module_01
+import maze_generator
 
 N, S, E, W = 1, 2, 4, 8
 
@@ -158,13 +158,13 @@ class Game():
 
 
 
-prims = cpp_module_01.generatePrims(6,6,1, 30)
-kruskals = cpp_module_01.generateKruskals(6,6,1, 30)
-aldusBroder = cpp_module_01.generateAldusBroder(6,6,1, 30)
-sideWinder = cpp_module_01.generateSideWinder(6,6,1, 30)
-recursive = cpp_module_01.generateRecursiveBacktrack(10,10,1, 30)
+prims = maze_generator.generatePrims(6,6,1, 30)
+kruskals = maze_generator.generateKruskals(6,6,1, 30)
+aldusBroder = maze_generator.generateAldusBroder(6,6,1, 30)
+sideWinder = maze_generator.generateSideWinder(6,6,1, 30)
+recursive = maze_generator.generateRecursiveBacktrack(10,10,1, 30)
 
-v = [cpp_module_01.generatePrims, cpp_module_01.generateKruskals, cpp_module_01.generateAldusBroder, cpp_module_01.generateSideWinder, cpp_module_01.generateRecursiveBacktrack]
+v = [maze_generator.generatePrims, maze_generator.generateKruskals, maze_generator.generateAldusBroder, maze_generator.generateSideWinder, maze_generator.generateRecursiveBacktrack]
 
 while(1):
     fnc = v[random.randint(0,len(v)-1)]
