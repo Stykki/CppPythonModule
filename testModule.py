@@ -1,4 +1,5 @@
-
+import os
+import random
 import msvcrt
 import sys
 import cpp_module_01
@@ -36,43 +37,6 @@ NEW = N+E+W
 
 SNEW = S+N+E+W
 SEW = S+E+W
-
-
-DISPMAP = {
-
-        0: "━━━━━",
-
-        N: "┃   ┃-┃ - ┃-┗━━━┛",
-
-        W: "┏━━━━-┃ -  -┗━━━━",
-
-        S: "┏━━━┓-┃ - ┃-┃   ┃",
-
-        E: "━━━━┓-  - ┃-━━━━┛",
-
-        NS: "┃   ┃-┃ - ┃-┃   ┃",
-
-        NW: "┃    -┃ -  -┗━━━━",
-
-        NE: "    ┃-  - ┃-━━━━┛",
-
-        EW: "━━━━━-  -  -━━━━━",
-
-        SW: "┏━━━━-┃ -  -┃    ",
-
-        NSW: "┃    -┃ -  -┃    ",
-
-        SE: "━━━━┓-  - ┃-    ┃",
-
-        NSE: "    ┃- -  ┃-    ┃",
-
-        NEW: "     -  -  -━━━━━",
-        
-        SEW: "━━━━━-  -  -     ",
-
-        SNEW:"     -  -  -     ",
-
-        }
 
 DISPMAPT = {
 
@@ -120,7 +84,6 @@ class Game():
         self.playerY = 0
         self.goalX = len(grid)-1
         self.goalY = len(grid[0])-1
-        self.path =[[0]*4]*4
 
 
     def displayGrid(self):
@@ -184,16 +147,31 @@ class Game():
 
     def play(self):
         while(True):
+            os.system('cls')
             self.displayGrid()
             self.makeMove()
             if(self.playerX == self.goalX and self.playerY == self.goalY):
+                os.system('cls')
                 print("============== WINNER =================")
                 self.displayGrid()
                 break
 
 
 
-d = Game(cpp_module_01.generateRecursiveBacktrack(3,3,0,0))
-d.play()
+prims = cpp_module_01.generatePrims(6,6,1, 30)
+kruskals = cpp_module_01.generateKruskals(6,6,1, 30)
+aldusBroder = cpp_module_01.generateAldusBroder(6,6,1, 30)
+sideWinder = cpp_module_01.generateSideWinder(6,6,1, 30)
+recursive = cpp_module_01.generateRecursiveBacktrack(10,10,1, 30)
+
+v = [cpp_module_01.generatePrims, cpp_module_01.generateKruskals, cpp_module_01.generateAldusBroder, cpp_module_01.generateSideWinder, cpp_module_01.generateRecursiveBacktrack]
+
+while(1):
+    fnc = v[random.randint(0,len(v)-1)]
+
+    w = random.randint(1,10)
+    h = random.randint(1,10)
+    d = Game(fnc(w,h,1,30))
+    d.play()
 
 
