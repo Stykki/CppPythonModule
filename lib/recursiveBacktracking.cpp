@@ -11,10 +11,10 @@ using namespace std;
 class RecursiveBacktrack: public Maze
 {
     protected:
-        int N = 1;
-        int S = 2;
-        int W = 4;
-        int E = 8;
+        int N = 1;      //-----------//
+        int S = 2;      // Direction //
+        int W = 4;      //  values   //
+        int E = 8;      //-----------//
         //                         0    N  S  3   W  5  6  7  E
         int MOVE_X_DIRECTION[9] = {0 ,  0, 0, 0, -1, 0, 0, 0, 1};
         int MOVE_Y_DIRECTION[9] = {0 , -1, 1, 0,  0, 0, 0, 0, 0};
@@ -80,8 +80,8 @@ void RecursiveBacktrack::carvePassagesFrom(int x, int y)
 
     for (int i = 0; i< 4; i++)
     {
-        int newX = x + MOVE_X_DIRECTION[dir[i]];
-        int newY = y + MOVE_Y_DIRECTION[dir[i]];
+        int newX = x + MOVE_X_DIRECTION[dir[i]];    // get new x direction
+        int newY = y + MOVE_Y_DIRECTION[dir[i]];    // get new y direction
         if (isPosValid(newX, newY))
         {
             mazeGrid[getIndex(y, x)] |= dir[i];     // make way in direction

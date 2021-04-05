@@ -193,7 +193,12 @@ class Game():
 
 
 
-print(cpp_module_01.generatePrims(3,6,1,1000))
+cpp_module_01.generateRecursiveBacktrack(5,10)
+cpp_module_01.generateKruskals(5,10)
+cpp_module_01.generatePrims(5,10)
+cpp_module_01.generateAldusBroder(5,10)
+cpp_module_01.generateSideWinder(5,10)
+
 
 
 
