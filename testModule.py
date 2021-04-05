@@ -193,7 +193,9 @@ class Game():
 
 
 
-print(cpp_module_01.generatePrims(3,6,1,1000))
+d = Game(cpp_module_01.generatePrims(25,25))
+d.play()
+
 
 
 

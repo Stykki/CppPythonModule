@@ -17,6 +17,9 @@ int myrandom (int i) { return std::rand()%i;}
 
 class kTree
 {
+    /*
+     * This class is used to mark connected paths
+     */
     private:
 
     public:
@@ -117,6 +120,9 @@ Kruskals::Kruskals(int w, int h)
         sets[i] = kTree();
         sets[i].setId(i);
     }
+    /*
+     * Instantiating every point into a vector that will be shuffled later
+     */
     for(int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
@@ -144,17 +150,22 @@ void Kruskals::run()
 {
     while(edges->size() > 0)
     {
+        // Get a random point in the graph
         int x = edges->back()[0];
         int y = edges->back()[1];
         int direction = edges->back()[2];
         edges->pop_back();
 
+        // get a neighbouring point ( based on directon )
         int nx = x + MOVE_X_DIRECTION[direction];
         int ny = y + MOVE_Y_DIRECTION[direction];
 
+        // get both of the point's "trees"
         kTree set_1 = sets[getIndex(y,x)];
         kTree set_2 = sets[getIndex(ny,nx)];
         
+        // if they have the same parent then their paths have already crossed
+        // otherwize connect them
         if(!set_1.sameParent(&set_2))
         {
             int s1Parent = set_1.root()->id;
@@ -165,17 +176,17 @@ void Kruskals::run()
             mazeGrid[getIndex(y,x)] |= direction;
             mazeGrid[getIndex(ny,nx)] |= OPPOSITE_DIRECTION[direction];
 
-                pathGrid[getIndex(y,x)] = 1;
-                pathGrid[getIndex(ny,nx)] = 1;
+            pathGrid[getIndex(y,x)] = 1;
+            pathGrid[getIndex(ny,nx)] = 1;
                 // PRINT GRID
-        if ( DISPLAY )
-        {
-            printGrid();
-            Sleep(DELAY);
-        }
+            if ( DISPLAY )
+            {
+                printGrid();
+                Sleep(DELAY);
+            }
 
-                pathGrid[getIndex(y,x)] = 0;
-                pathGrid[getIndex(ny,nx)] = 0;
+            pathGrid[getIndex(y,x)] = 0;
+            pathGrid[getIndex(ny,nx)] = 0;
         }
     }
 }

@@ -65,6 +65,11 @@ Prims::Prims(int w, int h)
 tuple<int,int> Prims::getRandomNeighbour(int y, int x)
 {
     
+    /*
+     * This function gets a random valid neighbour from a given y,x coordinate
+     * Retunres a single y,x coordinate as a tuple
+     * A coordinate is valid if it has not been visited and it is not out of bounds
+     */
     vector<tuple<int, int>> nbrs;
     if (x > 0)
     {
@@ -103,6 +108,11 @@ tuple<int,int> Prims::getRandomNeighbour(int y, int x)
 
 void Prims::addMark(int x, int y)
 {
+    /*
+     * This function takes in a y, x coordinate and if that coordinate is valid
+     * marks that position as availabe for the algorithim
+     * also adds that point to a markedPoints vector
+     */
     if ((x >= 0) && (y >= 0) && (x < width) && (y < height))
     {
         if (mazeGrid[getIndex(y,x)] == 0)
@@ -121,6 +131,9 @@ void Prims::mark()
 
 void Prims::mark(int x, int y)
 {
+    /*
+     * Markes the given y,x coordinate and all neighbours
+     */
     mazeGrid[getIndex(y,x)] |= MARKED;
     addMark(x-1, y);
     addMark(x+1, y);
@@ -130,19 +143,23 @@ void Prims::mark(int x, int y)
 
 void Prims::run()
 {
-    mark();
+
+    mark(); // marks a random point to start from
     while (markedPoints.size() != 0)
     {
         int x,y,x2,y2;
         
+        // put a random point of available points to the back
         swap(markedPoints[(rand() % markedPoints.size())], markedPoints.back());
 
+        // get the random point
         tuple<int, int> point = markedPoints.back();
 
         markedPoints.pop_back();
 
         tie(y,x) = point;
 
+        // get a random neighbour from that point
         tuple<int, int> rNbr = getRandomNeighbour(y, x);
 
         tie(y2,x2) = rNbr;
@@ -150,12 +167,15 @@ void Prims::run()
 
         int dir = direction(x, y, x2, y2);
 
+        // mark the current point's direction
         mazeGrid[getIndex(y, x)] |= dir;
+        // mark the neighbours direction as the opposite direction
         mazeGrid[getIndex(y2, x2)] |= OPPOSITE_DIRECTION[dir];
 
         pathGrid[getIndex(y, x)] = 1;
         pathGrid[getIndex(y2, x2)] = 1;
 
+        // mark the current point (making valid neighbours available)
         mark(x,y);
         
         if ( DISPLAY )
