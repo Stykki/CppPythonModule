@@ -1,11 +1,21 @@
 #include "Python.h"
 #include "./lib/sidewinder.cpp"
+#include <time.h>
+#include <random>
 
 
 static PyObject* generateKruskals(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2;
-    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
+    int w, h, d=0, del=2, seed=0;
+    PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
+    if (seed)
+    {
+        srand(seed);
+    }
+    else
+    {
+        srand(time(NULL));
+    }
     Kruskals* T = new Kruskals(w, h);
     PyObject* ls = PyList_New(0);
     if ( d != 1){
@@ -30,9 +40,16 @@ static PyObject* generateKruskals(PyObject* self, PyObject* args)
 
 static PyObject* generatePrims(PyObject* self, PyObject* args)
 {
-    int w, h, d = 0, del = 2;
-    
-    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
+    int w, h, d=0, del=2, seed=0;
+    PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
+    if (seed)
+    {
+        srand(seed);
+    }
+    else
+    {
+        srand(time(NULL));
+    }
 
     PyObject* ls = PyList_New(0);
     Prims *P = new Prims(w, h);
@@ -59,8 +76,16 @@ static PyObject* generatePrims(PyObject* self, PyObject* args)
 
 static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2;
-    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
+    int w, h, d=0, del=2, seed=0;
+    PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
+    if (seed)
+    {
+        srand(seed);
+    }
+    else
+    {
+        srand(time(NULL));
+    }
 
     
     RecursiveBacktrack *P = new RecursiveBacktrack(w, h);
@@ -90,8 +115,16 @@ static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
 
 static PyObject* generateAldusBroder(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2;
-    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
+    int w, h, d=0, del=2, seed=0;
+    PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
+    if (seed)
+    {
+        srand(seed);
+    }
+    else
+    {
+        srand(time(NULL));
+    }
 
     
     AldusBroder *P = new AldusBroder(w, h);
@@ -120,8 +153,16 @@ static PyObject* generateAldusBroder(PyObject* self, PyObject* args)
 
 static PyObject* generateSideWinder(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2;
-    PyArg_ParseTuple(args,"ii|ii", &w, &h, &d, &del);
+    int w, h, d=0, del=2, seed=0;
+    PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
+    if (seed)
+    {
+        srand(seed);
+    }
+    else
+    {
+        srand(time(NULL));
+    }
 
     
     PyObject* ls = PyList_New(0);
