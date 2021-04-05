@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -318,6 +319,8 @@ void Maze::printGrid()
 
     }
 
+    cout << flush;
+    system ("CLS");
     cout << mazeString << endl;
 
 }

@@ -6,7 +6,7 @@
 
 static PyObject* generateKruskals(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2, seed=0;
+    int w, h, d=0, del=10, seed=0;
     PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
     if (seed)
     {
@@ -16,8 +16,8 @@ static PyObject* generateKruskals(PyObject* self, PyObject* args)
     {
         srand(time(NULL));
     }
-    Kruskals* T = new Kruskals(w, h);
     PyObject* ls = PyList_New(0);
+    Kruskals* T = new Kruskals(w, h);
     if ( d != 1){
         T->toggleDisplay();
     }
@@ -33,14 +33,13 @@ static PyObject* generateKruskals(PyObject* self, PyObject* args)
         }
         PyList_Append(ls, temp);
     }
-    T->printGrid();
     delete T;
     return ls;
 }
 
 static PyObject* generatePrims(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2, seed=0;
+    int w, h, d=0, del=10, seed=0;
     PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
     if (seed)
     {
@@ -69,14 +68,13 @@ static PyObject* generatePrims(PyObject* self, PyObject* args)
         }
         PyList_Append(ls, temp);
     }
-    P->printGrid();
     delete P;
     return ls;
 }
 
 static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2, seed=0;
+    int w, h, d=0, del=10, seed=0;
     PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
     if (seed)
     {
@@ -107,7 +105,6 @@ static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
         }
         PyList_Append(ls, temp);
     }
-    P->printGrid();
     delete P;
     return ls;
 }
@@ -115,7 +112,7 @@ static PyObject* generateRecursiveBacktrack(PyObject* self, PyObject* args)
 
 static PyObject* generateAldusBroder(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2, seed=0;
+    int w, h, d=0, del=10, seed=0;
     PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
     if (seed)
     {
@@ -146,14 +143,13 @@ static PyObject* generateAldusBroder(PyObject* self, PyObject* args)
         }
         PyList_Append(ls, temp);
     }
-    P->printGrid();
     delete P;
     return ls;
 }
 
 static PyObject* generateSideWinder(PyObject* self, PyObject* args)
 {
-    int w, h, d=0, del=2, seed=0;
+    int w, h, d=0, del=10, seed=0;
     PyArg_ParseTuple(args,"ii|iii", &w, &h, &d, &del, &seed);
     if (seed)
     {
@@ -165,8 +161,8 @@ static PyObject* generateSideWinder(PyObject* self, PyObject* args)
     }
 
     
-    PyObject* ls = PyList_New(0);
     SideWinder *P = new SideWinder(w, h);
+    PyObject* ls = PyList_New(0);
 
     if ( d != 1){
         P->toggleDisplay();
@@ -184,7 +180,6 @@ static PyObject* generateSideWinder(PyObject* self, PyObject* args)
         }
         PyList_Append(ls, temp);
     }
-    P->printGrid();
     delete P;
     return ls;
 }
