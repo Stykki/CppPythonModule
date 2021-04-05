@@ -79,10 +79,10 @@ void kTree::connectTrees(kTree* otherT)
 class Kruskals: public Maze
 {
     protected:
-        int N = 1;
-        int S = 2;
-        int W = 4;
-        int E = 8;
+        int N = 1;      //-----------//
+        int S = 2;      // Direction //
+        int W = 4;      //  values   //
+        int E = 8;      //-----------//
         //                         0    N  S  3   W  5  6  7  E
         int MOVE_X_DIRECTION[9] = {0 ,  0, 0, 0, -1, 0, 0, 0, 1};
         int MOVE_Y_DIRECTION[9] = {0 , -1, 1, 0,  0, 0, 0, 0, 0};

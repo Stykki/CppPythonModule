@@ -45,6 +45,7 @@ AldusBroder::AldusBroder(int w, int h)
 
 void AldusBroder::run()
 {
+    // start at random coordinate in grid
     int x = rand() % width;
     int y = rand() % height;
     
@@ -95,6 +96,9 @@ void AldusBroder::run()
 
 bool AldusBroder::isPosValid(int x, int y)
 {
+    /*
+    * checks wither the provided x and y coordinates are within bounds of the grid
+    */
     if ((x >= 0) && (y >= 0) && (x < width) && (y < height))
     {
         return 1;

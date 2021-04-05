@@ -13,10 +13,10 @@ class Prims: public Maze
 
 {
     protected:
-        int N = 1;
-        int S = 2;
-        int W = 4;
-        int E = 8;
+        int N = 1;      //-----------//
+        int S = 2;      // Direction //
+        int W = 4;      //  values   //
+        int E = 8;      //-----------//
         int OPPOSITE_DIRECTION[9] = {0, S, N, 0,  E, 0, 0, 0, W};
 
         int MARKED = 16;

@@ -62,9 +62,12 @@ void RecursiveBacktrack::setDelay(int del)
 
 bool RecursiveBacktrack::isPosValid(int x, int y)
 {
+    /*
+    * checks wither the provided x and y coordinates are within bounds of the grid
+    */
     if ((x >= 0) && (y >= 0) && (x < width) && (y < height))
     {
-        if (mazeGrid[getIndex(y,x)] == 0)
+        if (mazeGrid[getIndex(y,x)] == 0)   // check whether the position has been touched before
         {
             return 1;
         }

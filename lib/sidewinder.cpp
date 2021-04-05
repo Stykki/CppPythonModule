@@ -50,11 +50,11 @@ void SideWinder::run()
         {
             
             if ((y > 0) && ((x+1 == width) || ((rand() % weight) == 0)))
-//  dont stop at first line,   stop if at end or randomly got 0 from random calculation
+//  dont stop at first line,   stop if at end or got 0 from random calculation
             {
                 int cell = runStart + rand() % (x - runStart + 1);  // get new cell 
                 mazeGrid[getIndex(y, cell)] |= N;       // make way north
-                mazeGrid[getIndex(y-1, cell)] |= S;
+                mazeGrid[getIndex(y-1, cell)] |= S;     // make way south
 
                 if (DISPLAY)
                 {
@@ -71,7 +71,7 @@ void SideWinder::run()
             else if (x+1 < width)   // dont make way east if at end
             {
                 mazeGrid[getIndex(y, x)] |= E;  // make way east
-                mazeGrid[getIndex(y, x+1)] |= W;
+                mazeGrid[getIndex(y, x+1)] |= W;    // make way west
 
                 if (DISPLAY)
                 {
