@@ -1,7 +1,7 @@
 # CppPythonModule
 
 # Installation
-After donwloading and unpacking cd into the root directory and running
+After donwloading and unpacking cd into the root directory and run
 ```
 python setup.py build
 python setup.py install
@@ -9,7 +9,7 @@ python setup.py install
 After installation try running the test module named "testModule.py"
 
 # How to use
-After installation generating masez becomes as easy as
+After installation generating mazes becomes as easy as
 ```python
 import cpp_module_01
 
