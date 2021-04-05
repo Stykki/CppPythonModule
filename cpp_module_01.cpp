@@ -16,8 +16,8 @@ static PyObject* generateKruskals(PyObject* self, PyObject* args)
     {
         srand(time(NULL));
     }
-    Kruskals* T = new Kruskals(w, h);
     PyObject* ls = PyList_New(0);
+    Kruskals* T = new Kruskals(w, h);
     if ( d != 1){
         T->toggleDisplay();
     }
