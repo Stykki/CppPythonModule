@@ -193,11 +193,8 @@ class Game():
 
 
 
-cpp_module_01.generateRecursiveBacktrack(5,10)
-cpp_module_01.generateKruskals(5,10)
-cpp_module_01.generatePrims(5,10)
-cpp_module_01.generateAldusBroder(5,10)
-cpp_module_01.generateSideWinder(5,10)
+d = Game(cpp_module_01.generatePrims(25,25))
+d.play()
 
 
 
