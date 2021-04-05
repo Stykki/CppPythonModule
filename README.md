@@ -11,14 +11,14 @@ After installation try running the test module named "testModule.py"
 # How to use
 After installation generating mazes becomes as easy as
 ```python
-import cpp_module_01
+import maze_generator
 
 #                                    Width   Height   visible  Display Delay    Seed
-prims = cpp_module_01.generatePrims(   6  ,    6    ,    1    ,    30      ,     40    )
-kruskals = cpp_module_01.generateKruskals(6,6,1, 30)
-aldusBroder = cpp_module_01.generateAldusBroder(6,6,1, 30)
-sideWinder = cpp_module_01.generateSideWinder(6,6,1, 30)
-recursive = cpp_module_01.generateRecursiveBacktrack(10,10,1, 30)
+prims = maze_generator.generatePrims(   6  ,    6    ,    1    ,    30      ,     40    )
+kruskals = maze_generator.generateKruskals(6,6,1, 30)
+aldusBroder = maze_generator.generateAldusBroder(6,6,1, 30)
+sideWinder = maze_generator.generateSideWinder(6,6,1, 30)
+recursive = maze_generator.generateRecursiveBacktrack(10,10,1, 30)
 ```
 
 # Non optional parameters
