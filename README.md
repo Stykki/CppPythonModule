@@ -1,5 +1,6 @@
 # CppPythonModule
-
+## Made by Vignirv19 and Magnusm19
+### THIS PROGRAM IS WINDOWS ONLY
 # Installation
 After donwloading and unpacking cd into the root directory and run
 ```
